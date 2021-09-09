@@ -1,4 +1,6 @@
-import { NotImplementedError } from '../extensions/index.js';
+import {
+  NotImplementedError
+} from '../extensions/index.js';
 
 /**
  * Create transformed array based on the control sequences that original
@@ -14,14 +16,33 @@ import { NotImplementedError } from '../extensions/index.js';
  * 
  */
 export default function transform(arr) {
- const trArr = [];
- arr.forEach((item,i)=>{
-   if (typeof(item) === 'number') {
-     trArr.push(item);
-   } else {
-     switch(item){
-       case ''
-     }
-   }
- });
+  if (!Array.isArray(arr)) throw new Error("'arr' parameter must be an instance of the Array!");
+  const trArr = [];
+  let b = false;
+  arr.forEach((item, i) => {
+    if (b) {
+      b = false;
+    } else {
+      switch (item) {
+        case '--discard-next':
+          b = true;
+          break;
+        case '--discard-prev':
+          if (trArr.length > 0 && arr[i - 2] !='--discard-next') {
+            trArr.pop();
+          } 
+          break;
+        case '--double-next':
+          if (i<arr.length-1)trArr.push(arr[i + 1]);
+          break;
+        case '--double-prev':
+          if(i>0&&arr[i - 2] !='--discard-next')trArr.push(arr[i - 1]);
+          break;
+        default:
+          trArr.push(item);
+          break;
+      }
+    }
+  });
+  return trArr;
 }
