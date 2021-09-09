@@ -13,7 +13,15 @@ import { NotImplementedError } from '../extensions/index.js';
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  * 
  */
-export default function transform(/* arr */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+export default function transform(arr) {
+ const trArr = [];
+ arr.forEach((item,i)=>{
+   if (typeof(item) === 'number') {
+     trArr.push(item);
+   } else {
+     switch(item){
+       case ''
+     }
+   }
+ });
 }
